@@ -1,0 +1,101 @@
+version: "3.9"
+
+services:
+  backend:
+    build: ./
+    # command: uvicorn Application.main:app --reload --workers 4 --host 0.0.0.0 --port 8000
+    volumes:
+      - ./SQLDatabase/init:/docker-entrypoint-initdb.d
+    ports:
+      - "8000:8000"
+    env_file:
+      - SQLDatabase/DB.env
+    environment:
+      - DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@localHost:5432/${POSTGRES_DB}"
+
+    depends_on:
+      - db
+
+
+  frontend:
+    container_name: react
+    build:
+      context: ./Frontend
+      dockerfile: ./Dockerfile
+    volumes:
+      - './Frontend:/Frontend'
+      - '/Frontend/node_modules'
+    ports:
+      - "3001:3000"
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+
+  db:
+   build:
+     context: SQLDatabase
+   env_file:
+     - SQLDatabase/DB.env
+   volumes:
+     - postgres_data:/var/lib/postgresql/data/
+     - ./SQLDatabase/data:/var/lib/postgresql/data
+   environment:
+     - POSTGRES_USER="${POSTGRES_USER}"
+     - POSTGRES_PASSWORD="${POSTGRES_PASSWORD}"
+     - POSTGRES_DB="${c}"
+
+   ports:
+    - "5432:5432"
+   healthcheck:
+     test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_USER}"]
+     interval: 10s
+     timeout: 5s
+     retries: 5
+     start_period: 10s
+   restart: unless-stopped
+   deploy:
+     resources:
+       limits:
+         cpus: '1'
+         memory: 4G
+
+
+  prometheus:
+    build:
+      context: ./prometheus_data
+    container_name: prometheus
+    ports:
+      - 9090:9090
+    volumes:
+      - ./prometheus_data:/etc/prometheus
+
+    command:
+      - '--config.file=/etc/prometheus_data/prometheus.yaml'
+
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - 3000:3000
+    volumes:
+      - grafana_data:/var/lib/grafana
+
+volumes:
+  prometheus_data:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ./prometheus_data
+  grafana_data:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ./grafana_data
+  postgres_data:
+  data:
+
+networks:
+  default:
+    name: fastapi

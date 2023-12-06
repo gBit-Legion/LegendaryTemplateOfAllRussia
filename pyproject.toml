@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "legendarytemplateallofrussia"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.104.1"
+prometheus-fastapi-instrumentator = "^6.1.0"
+gunicorn = {extras = ["standart"], version = "^21.2.0"}
+uvicorn = "^0.24.0.post1"
+prometheus-client = "^0.18.0"
+cffi = "^1.16.0"
+pymongo = "^4.6.0"
+python-dotenv = "^1.0.0"
+alembic = "^1.13.0"
+loguru = "^0.7.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
