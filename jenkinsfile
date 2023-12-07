@@ -1,0 +1,38 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // Шаг для клонирования репозитория с кодом
+                git ''
+            }
+        }
+
+        stage('Build') {
+            steps {
+                // Шаг для сборки Docker-образов, используя docker-compose
+                if isUnix {
+                    sh 'docker-compose build'
+                }
+                else {
+                    bat 'docker-compose build'
+                }
+
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                // Шаг для развертывания Docker-контейнеров, используя docker-compose
+                if isUnix {
+                     sh 'docker-compose up -d'
+                }
+                else {
+                    bat 'docker-compose up -d'
+                }
+
+            }
+        }
+    }
+}
