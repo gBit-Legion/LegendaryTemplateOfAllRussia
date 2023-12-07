@@ -6,12 +6,7 @@ pipeline {
             steps {
                 script {
                     // Шаг для сборки Docker-образов, используя docker-compose
-                    def os = env.OS
-                    if (os == "Linux") {
-                        sh 'docker-compose build'
-                    }
-                    else if (os == "Windows"){
-                        bat 'docker-compose build'
+                    sh 'docker-compose build'
                     }
                 }
             }
@@ -21,12 +16,7 @@ pipeline {
             steps {
                 script {
                     // Шаг для развертывания Docker-контейнеров, используя docker-compose
-                    def os = env.OS
-                    if (os == "Linux")  {
                          sh 'docker-compose up -d'
-                    }
-                    else if (os == "Windows") {
-                        bat 'docker-compose up -d'
                     }
                 }
             }
