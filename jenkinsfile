@@ -4,20 +4,17 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                script {
-                    // Шаг для сборки Docker-образов, используя docker-compose
-                    sh 'docker-compose build'
-                    }
+                // Шаг для сборки Docker-образов, используя docker-compose
+                bat 'docker-compose build'
                 }
             }
         }
 
         stage('Deploy') {
             steps {
-                script {
-                    // Шаг для развертывания Docker-контейнеров, используя docker-compose
-                         sh 'docker-compose up -d'
-                    }
+                // Шаг для развертывания Docker-контейнеров, используя docker-compose
+                     bat 'docker-compose up -d'
+
                 }
             }
         }
