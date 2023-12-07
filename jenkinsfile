@@ -6,7 +6,6 @@ pipeline {
             steps {
                 // Шаг для сборки Docker-образов, используя docker-compose
                 bat 'docker-compose build'
-                }
             }
         }
 
@@ -14,8 +13,6 @@ pipeline {
             steps {
                 // Шаг для развертывания Docker-контейнеров, используя docker-compose
                      bat 'docker-compose up -d'
-
-                }
             }
         }
     }
