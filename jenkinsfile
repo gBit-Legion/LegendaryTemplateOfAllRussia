@@ -9,7 +9,7 @@ pipeline {
                 if (os == "Linux") {
                     sh 'docker-compose build'
                 }
-                else (if os == "Windows"){
+                else if (os == "Windows"){
                     bat 'docker-compose build'
                 }
 
