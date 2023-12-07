@@ -19,7 +19,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 // Шаг для развертывания Docker-контейнеров, используя docker-compose
-                if isUnix {
+                if (isUnix) {
                      sh 'docker-compose up -d'
                 }
                 else {
