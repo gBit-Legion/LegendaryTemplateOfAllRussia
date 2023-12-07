@@ -2,6 +2,7 @@ version: "3.9"
 
 services:
   backend:
+    container_name: fastAPI
     build: ./
     # command: uvicorn Application.main:app --reload --workers 4 --host 0.0.0.0 --port 8000
     volumes:
@@ -18,21 +19,24 @@ services:
 
 
   frontend:
-    container_name: react
+    container_name: vue
     build:
       context: ./Frontend
       dockerfile: ./Dockerfile
     volumes:
-      - './Frontend:/Frontend'
-      - '/Frontend/node_modules'
+      - '/Frontend:/Frontend'
     ports:
-      - "3001:3000"
+      - "8080:8080"
+      - "80:80"
     environment:
       - CHOKIDAR_USEPOLLING=true
 
+    depends_on:
+      - backend
   db:
    build:
-     context: SQLDatabase
+    context: SQLDatabase
+   container_name: postgres
    env_file:
      - SQLDatabase/DB.env
    volumes:
@@ -41,7 +45,7 @@ services:
    environment:
      - POSTGRES_USER="${POSTGRES_USER}"
      - POSTGRES_PASSWORD="${POSTGRES_PASSWORD}"
-     - POSTGRES_DB="${c}"
+     - POSTGRES_DB="${POSTGRES_DB}"
 
    ports:
     - "5432:5432"
@@ -87,6 +91,7 @@ volumes:
       o: bind
       type: none
       device: ./prometheus_data
+
   grafana_data:
     driver: local
     driver_opts:
@@ -95,6 +100,7 @@ volumes:
       device: ./grafana_data
   postgres_data:
   data:
+  Frontend:
 
 networks:
   default:

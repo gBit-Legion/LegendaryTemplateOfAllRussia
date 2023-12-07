@@ -1,15 +1,20 @@
-pipeline {
+pipeline
+{
     agent any
 
-    stages {
-        stage('Build') {
-            steps {
+    stages
+    {
+        stage('Build')
+        {
+            steps
+            {
                 // Шаг для сборки Docker-образов, используя docker-compose
                 bat 'docker-compose build'
             }
         }
 
-        stage('Deploy') {
+        stage('Deploy')
+        {
             steps {
                 // Шаг для развертывания Docker-контейнеров, используя docker-compose
                      bat 'docker-compose up -d'

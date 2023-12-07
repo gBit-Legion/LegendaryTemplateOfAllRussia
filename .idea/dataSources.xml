@@ -8,5 +8,16 @@
       <jdbc-url>jdbc:sqlite:C:\Users\krusher\PycharmProjects\LegendaryTemplateOfAllRussia\grafana_data\grafana.db</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="Zeppelin connection" read-only="true" uuid="6c9ff137-748b-47d8-a3b7-dc54533ebd3a">
+      <synchronize>true</synchronize>
+      <remarks>Wrapper For Zeppelin Spark from Big Data Tools plugin</remarks>
+      <jdbc-driver>com.dbschema.ZeppelinSparkJdbcDriver</jdbc-driver>
+      <jdbc-url>Zeppelin connection@ZeppelinConnections@3866826976334456286</jdbc-url>
+      <jdbc-additional-properties>
+        <property name="forceUseDriverIcon" value="true" />
+        <property name="connectionId" value="Zeppelin connection@ZeppelinConnections@3866826976334456286" />
+      </jdbc-additional-properties>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>
