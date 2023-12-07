@@ -2,13 +2,6 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout') {
-            steps {
-                // Шаг для клонирования репозитория с кодом
-                git 'https://github.com/gBit-Legion/LegendaryTemplateOfAllRussia.git'
-            }
-        }
-
         stage('Build') {
             steps {
                 // Шаг для сборки Docker-образов, используя docker-compose
